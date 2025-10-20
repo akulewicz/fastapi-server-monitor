@@ -1,9 +1,13 @@
 import psutil
+import logging
+
+logger = logging.getLogger(__name__)
 
 def get_cpu_temp():
     try:
         temps = psutil.sensors_temperatures()
     except Exception:
+        logger.warning(f"Nie udało się odczytać czujników temperatury: {e}")
         return None
 
     coretemps = temps.get("coretemp")
@@ -33,4 +37,5 @@ def get_disk_usage():
     try:
         return psutil.disk_usage("/").percent
     except Exception as e:
+        logging.warning(f"Nie udało się pobrać użycia dysku: {e}")
         return None
