@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 def get_cpu_temp():
     try:
         temps = psutil.sensors_temperatures()
-    except Exception:
+    except Exception as e:
         logger.warning(f"Nie udało się odczytać czujników temperatury: {e}")
         return None
 
