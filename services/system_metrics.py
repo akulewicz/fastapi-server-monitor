@@ -1,9 +1,14 @@
+from cpuinfo import get_cpu_info as cpuinfo_get_cpu_info
 import psutil
 import logging
+import platform
+import distro
+
 
 logger = logging.getLogger(__name__)
 
 def get_cpu_temp():
+
     try:
         temps = psutil.sensors_temperatures()
     except Exception as e:
@@ -31,7 +36,26 @@ def get_cpu_temp():
         return avg_cpu_temp
     
     return None
-  
+
+def get_cpu_info():
+    info = {}
+
+    info['cpu_temp'] = get_cpu_temp()
+
+    try:
+        cpu_info = cpuinfo_get_cpu_info()
+        info['cpu_info'] = {
+            "brand": cpu_info.get("brand_raw", "unknown"),
+            "arch": cpu_info.get("arch", "unknown"),
+            "bits": cpu_info.get("bits", "unknown"),
+        }
+    except Exception as e:
+        logger.warning(f"Nie udało się pobrać informacji o CPU: {e}")
+        return None
+    
+    return info
+       
+
 
 def get_disk_usage():
     try:
@@ -39,3 +63,42 @@ def get_disk_usage():
     except Exception as e:
         logging.warning(f"Nie udało się pobrać użycia dysku: {e}")
         return None
+    
+
+def get_system_info():
+
+    info = {}
+    try:
+        info['system'] = platform.system()
+    except Exception as e:
+        logger.warning(f'Błąd przy pobieraniu systemu: {e}')
+        info['system'] = None
+
+    try:
+        info['release'] = platform.release()
+    except Exception as e:
+        logger.warning(f'Błąd przy pobieraniu wersji systemu: {e}')
+        info['release'] = None
+
+    try:
+        info['distro'] = distro.name(pretty=True)
+    except Exception as e:
+        logger.warning(f'Błąd przy pobieraniu dystrybcji: {e}')
+        return None
+
+    return info
+
+def get_memory_usage():
+    try:
+        mem = psutil.virtual_memory()
+        return {
+            "total": mem.total,
+            "used": mem.used,
+            "percent": mem.percent
+        }
+    except Exception as e:
+        logger.warning(f"Nie udało się pobrać danych o pamięci: {e}")
+        return None
+
+
+          
