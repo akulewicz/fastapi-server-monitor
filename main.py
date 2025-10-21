@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from services.system_metrics import get_cpu_temp, get_disk_usage
+from services.system_metrics import get_cpu_info, get_disk_usage, get_system_info, get_memory_usage
 import platform
 import distro
 import logging
@@ -29,15 +29,13 @@ async def dashboard(request: Request):
 
 @app.get("/status")
 async def get_stats():
-    cpu_temp = get_cpu_temp()
+    cpu = get_cpu_info()
     disk_usage = get_disk_usage()
-    system = platform.system()
-    release = platform.release()
-    distro_name = distro.name(pretty=True)
-
-    return {"cpu_temp": cpu_temp,
+    system_info = get_system_info()
+    memory_usage = get_memory_usage()
+    
+    return {"cpu": cpu,
             "disk_usage": disk_usage,
-            "system": system,
-            "release": release,
-            "distro_name": distro_name
+            "system_info": system_info,
+            "memory_usage": memory_usage
             }
