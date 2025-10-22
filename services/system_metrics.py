@@ -56,10 +56,15 @@ def get_cpu_info():
     return info
        
 
-
 def get_disk_usage():
     try:
-        return psutil.disk_usage("/").percent
+        disk = psutil.disk_usage("/")
+        return {
+            "total": disk.total,
+            "used": disk.used,
+            "free": disk.free,
+            "percent": disk.percent
+        }
     except Exception as e:
         logging.warning(f"Nie udało się pobrać użycia dysku: {e}")
         return None

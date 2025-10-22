@@ -3,8 +3,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from services.system_metrics import get_cpu_info, get_disk_usage, get_system_info, get_memory_usage
-import platform
-import distro
 import logging
 
 logging.basicConfig(filename="app.log",

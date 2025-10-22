@@ -19,23 +19,30 @@
             <div class="grid gap-2 sm:grid-cols-2">
                 <div class="bg-slate-800 p-4 rounded-md">
                     <h3 class="pb-4 text-lg">DANE SERWERA</h3>
-                    
+                    <ul>
+                        <li class="border-solid border-b border-slate-700 mb-2"><strong>System: </strong><span class="system"></span></li>
+                        <li class="border-solid border-b border-slate-700 mb-2"><strong>Procesor: </strong><span class="cpu"></span></li>
+                        <li class="border-solid border-b border-slate-700 mb-2"><strong>Pamięć RAM: </strong><span class="memory_total"></span> GB</li>
+                        <li class="border-solid border-b border-slate-700 mb-2"><strong>Dysk: </strong><span class="disk_total"></span> GB</li>
+
+                        
+                    </ul>
 
                 </div>
                 <div class="grid gap-2 sm:grid-cols-2">
                     <div class="bg-slate-800 p-4 rounded-md text-center">
                         <h3 class="pb-4 text-lg">CPU TEMP</h3>
-                        <div class="text-4xl text-white""><span class=" cpu_temp">10</span>'C</div>
+                        <div class="text-4xl text-white""><span class="cpu_temp">10</span>'C</div>
                     </div>
 
                     <div class="bg-slate-800 p-4 rounded-md text-center">
-                        <h3 class="pb-4 text-lg">UŻYCIE DYSKU</h3>
-                        <div class="text-4xl text-white""><span class=" cpu_temp">10</span>%</div>
+                        <h3 class="pb-4 text-lg">ZUŻYCIE DYSKU</h3>
+                        <div class="text-4xl text-white""><span class="disk_usage">10</span>%</div>
                     </div>
 
                     <div class="bg-slate-800 p-4 rounded-md text-center">
-                        <h3 class="pb-4 text-lg">ZALOGOWANI UŻYTKOWNICY</h3>
-                        <div class="text-4xl text-white""><span class=" cpu_temp">3</span></div>
+                        <h3 class="pb-4 text-lg">ZUŻYCIE RAM</h3>
+                        <div class="text-4xl text-white""><span class="memory_usage">3</span>%</div>
                     </div>
                 </div>
             </div>
@@ -66,7 +73,7 @@
 
 
 
-            <script src="/static/js/script.js"></script>
+            <script src="/static/js/fetchServerMetrics.js"></script>
 </body>
 
 </html>
