@@ -1,24 +1,14 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from core.templates import setup_templates
+from core.config import setup_logging
 from services.system_metrics import get_system_metrics
 from models.metrics import SystemMetrics
-import logging
 
-logging.basicConfig(filename="app.log",
-                    level=logging.INFO,
-                    format="{asctime} [{levelname}] {name}: {message}",
-                    style="{")
 
-logging.getLogger("watchfiles").setLevel(logging.WARNING)
-logging.getLogger("uvicorn.error").setLevel(logging.WARNING)
-logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
-
+setup_logging()
 app = FastAPI()
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+templates = setup_templates(app)
 
     
 @app.get("/", response_class=HTMLResponse)
