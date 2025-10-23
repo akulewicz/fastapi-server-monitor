@@ -13,6 +13,7 @@ const getServerMetrics = async () => {
         const response = await fetch(url)
         if (! response.ok ) throw response.status
         const data = await response.json()
+          console.log(data)
         return data
     } catch(e) {
         console.log(`Błąd pobierania danych: ${e}`)
@@ -23,13 +24,13 @@ const getServerMetrics = async () => {
 const bytesToGB = bytes => (bytes / (1024 ** 3)).toFixed(2);
 
 const updateUI = (data) => {
-    cpuTemp.textContent = data?.cpu?.cpu_temp ?? '—';
-    diskUsage.textContent = data?.disk_usage.percent ?? '—';
-    memoryUsage.textContent = data?.memory_usage?.percent ?? '—';
-    cpu.textContent = data?.cpu?.cpu_info?.brand ?? '—';
-    system.textContent = `${data?.system_info?.system}, ${data?.system_info?.release}, ${data?.system_info?.distro}` ?? '—'; 
-    totalMemory.textContent = bytesToGB(data?.memory_usage?.total) ?? '—';
-    totalDisk.textContent = bytesToGB(data?.disk_usage?.total) ?? '—';
+    cpuTemp.textContent = data?.cpu?.temp ?? '—';
+    diskUsage.textContent = data?.disk?.percent ?? '—';
+    memoryUsage.textContent = data?.memory?.percent ?? '—';
+    cpu.textContent = data?.cpu?.brand ?? '—';
+    system.textContent = `${data?.system?.system}, ${data?.system_info?.release}, ${data?.system_info?.distro}` ?? '—'; 
+    totalMemory.textContent = bytesToGB(data?.memory?.total) ?? '—';
+    totalDisk.textContent = bytesToGB(data?.disk?.total) ?? '—';
 }
 
 const refreshMetrics = async () => {

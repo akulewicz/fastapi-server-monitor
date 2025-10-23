@@ -38,72 +38,94 @@ def get_cpu_temp():
     return None
 
 def get_cpu_info():
-    info = {}
-
-    info['cpu_temp'] = get_cpu_temp()
+    info = {
+        "brand": None,
+        "arch": None,
+        "bits": None,
+        "temp": get_cpu_temp()
+    }
 
     try:
         cpu_info = cpuinfo_get_cpu_info()
-        info['cpu_info'] = {
-            "brand": cpu_info.get("brand_raw", "unknown"),
-            "arch": cpu_info.get("arch", "unknown"),
-            "bits": cpu_info.get("bits", "unknown"),
-        }
+        info["brand"] = cpu_info.get("brand_raw")
+        info["arch"] = cpu_info.get("arch")
+        info["bits"] = cpu_info.get("bits")
     except Exception as e:
         logger.warning(f"Nie udało się pobrać informacji o CPU: {e}")
-        return None
     
     return info
        
-
 def get_disk_usage():
+
+    info = {
+        "total": None,
+        "used": None,
+        "free": None,
+        "percent": None
+    }
+
     try:
         disk = psutil.disk_usage("/")
-        return {
-            "total": disk.total,
-            "used": disk.used,
-            "free": disk.free,
-            "percent": disk.percent
-        }
+        info["total"] = disk.total
+        info["used"] = disk.used
+        info["free"] = disk.free
+        info["percent"] = disk.percent
+
     except Exception as e:
-        logging.warning(f"Nie udało się pobrać użycia dysku: {e}")
-        return None
+        logger.warning(f"Nie udało się pobrać użycia dysku: {e}")
+    
+    return info
     
 
 def get_system_info():
 
-    info = {}
+    info = {
+        "system": None,
+        "release": None,
+        "distro": None
+    }
+
     try:
         info['system'] = platform.system()
     except Exception as e:
         logger.warning(f'Błąd przy pobieraniu systemu: {e}')
-        info['system'] = None
 
     try:
         info['release'] = platform.release()
     except Exception as e:
         logger.warning(f'Błąd przy pobieraniu wersji systemu: {e}')
-        info['release'] = None
 
     try:
         info['distro'] = distro.name(pretty=True)
     except Exception as e:
         logger.warning(f'Błąd przy pobieraniu dystrybcji: {e}')
-        return None
 
     return info
 
 def get_memory_usage():
+
+    info = {
+        "total": None,
+        "used": None,
+        "percent": None
+    }
+
     try:
         mem = psutil.virtual_memory()
-        return {
-            "total": mem.total,
-            "used": mem.used,
-            "percent": mem.percent
-        }
+        info["total"] = mem.total
+        info["used"] = mem.used,
+        info["percent"] = mem.percent
+        
     except Exception as e:
         logger.warning(f"Nie udało się pobrać danych o pamięci: {e}")
-        return None
+    
+    return info
 
 
-          
+def get_system_metrics():
+    return {
+        "cpu": get_cpu_info(),
+        "memory": get_memory_usage(),
+        "disk": get_disk_usage(),
+        "system": get_system_info()
+    }
