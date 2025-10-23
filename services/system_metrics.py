@@ -1,4 +1,5 @@
 from cpuinfo import get_cpu_info as cpuinfo_get_cpu_info
+from typing import Optional
 import psutil
 import logging
 import platform
@@ -7,7 +8,7 @@ import distro
 
 logger = logging.getLogger(__name__)
 
-def get_cpu_temp():
+def get_cpu_temp() -> Optional[float]:
 
     try:
         temps = psutil.sensors_temperatures()
@@ -37,11 +38,9 @@ def get_cpu_temp():
     
     return None
 
-def get_cpu_info():
+def get_cpu_info() -> dict:
+
     info = {
-        "brand": None,
-        "arch": None,
-        "bits": None,
         "temp": get_cpu_temp()
     }
 
@@ -52,38 +51,28 @@ def get_cpu_info():
         info["bits"] = cpu_info.get("bits")
     except Exception as e:
         logger.warning(f"Nie udało się pobrać informacji o CPU: {e}")
+        return {}
     
     return info
        
-def get_disk_usage():
-
-    info = {
-        "total": None,
-        "used": None,
-        "free": None,
-        "percent": None
-    }
+def get_disk_usage() -> dict:
 
     try:
         disk = psutil.disk_usage("/")
-        info["total"] = disk.total
-        info["used"] = disk.used
-        info["free"] = disk.free
-        info["percent"] = disk.percent
-
+        return {
+            "total": disk.total,
+            "used": disk.used,
+            "free": disk.free,
+            "percent": disk.percent
+        }
     except Exception as e:
         logger.warning(f"Nie udało się pobrać użycia dysku: {e}")
-    
-    return info
+        return {}
     
 
-def get_system_info():
+def get_system_info() -> dict:
 
-    info = {
-        "system": None,
-        "release": None,
-        "distro": None
-    }
+    info = {}
 
     try:
         info['system'] = platform.system()
@@ -102,27 +91,21 @@ def get_system_info():
 
     return info
 
-def get_memory_usage():
-
-    info = {
-        "total": None,
-        "used": None,
-        "percent": None
-    }
+def get_memory_usage() -> dict:
 
     try:
         mem = psutil.virtual_memory()
-        info["total"] = mem.total
-        info["used"] = mem.used,
-        info["percent"] = mem.percent
-        
+        return {
+            "total": mem.total,
+            "used": mem.used,
+            "percent": mem.percent
+        }
     except Exception as e:
         logger.warning(f"Nie udało się pobrać danych o pamięci: {e}")
+        return {}
     
-    return info
 
-
-def get_system_metrics():
+def get_system_metrics() -> dict:
     return {
         "cpu": get_cpu_info(),
         "memory": get_memory_usage(),

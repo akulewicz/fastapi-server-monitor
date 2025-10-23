@@ -28,7 +28,7 @@ const updateUI = (data) => {
     diskUsage.textContent = data?.disk?.percent ?? '—';
     memoryUsage.textContent = data?.memory?.percent ?? '—';
     cpu.textContent = data?.cpu?.brand ?? '—';
-    system.textContent = `${data?.system?.system}, ${data?.system_info?.release}, ${data?.system_info?.distro}` ?? '—'; 
+    system.textContent = `${data?.system?.system}, ${data?.system?.release}, ${data?.system?.distro}` ?? '—'; 
     totalMemory.textContent = bytesToGB(data?.memory?.total) ?? '—';
     totalDisk.textContent = bytesToGB(data?.disk?.total) ?? '—';
 }

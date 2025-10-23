@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from services.system_metrics import get_system_metrics
+from models.metrics import SystemMetrics
 import logging
 
 logging.basicConfig(filename="app.log",
@@ -25,6 +26,6 @@ async def dashboard(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
 
 
-@app.get("/status")
+@app.get("/status", response_model=SystemMetrics)
 async def get_stats():
     return get_system_metrics()
