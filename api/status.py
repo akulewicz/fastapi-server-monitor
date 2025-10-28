@@ -1,9 +1,18 @@
 from fastapi import APIRouter
 from services.system_metrics import get_system_metrics
+from services.rpi_metrics import get_rpi_env
 from models.metrics import SystemMetrics
 
 router = APIRouter()
 
 @router.get("/api/status", response_model=SystemMetrics)
 async def get_all_metrics():
-    return get_system_metrics()
+    system_data = get_system_metrics()
+    rpi_data = get_rpi_env()
+    return SystemMetrics(
+        cpu=system_data["cpu"],
+        memory=system_data["memory"],
+        disk=system_data["disk"],
+        system=system_data["system"],
+        env=rpi_data
+    )

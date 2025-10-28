@@ -7,6 +7,9 @@ const system = document.querySelector('.system');
 const cpu = document.querySelector('.cpu');
 const totalMemory = document.querySelector('.memory_total');
 const totalDisk = document.querySelector('.disk_total')
+const envTemp = document.querySelector('.env_temp');
+const envHumidity = document.querySelector('.env_humidity');
+const envPressure = document.querySelector('.env_pressure');
 
 const getServerMetrics = async () => {
     try {
@@ -31,6 +34,9 @@ const updateUI = (data) => {
     system.textContent = `${data?.system?.system}, ${data?.system?.release}, ${data?.system?.distro}` ?? '—'; 
     totalMemory.textContent = bytesToGB(data?.memory?.total) ?? '—';
     totalDisk.textContent = bytesToGB(data?.disk?.total) ?? '—';
+    envTemp.textContent = data?.env?.temperature ?? '—';
+    envHumidity.textContent = data?.env?.humidity ?? '—';
+    envPressure.textContent = data?.env?.pressure ?? '—';
 }
 
 const refreshMetrics = async () => {
