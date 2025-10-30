@@ -9,7 +9,7 @@ RPI_API_URL = "http://192.168.1.6:8000/env"
 def get_rpi_env() -> Optional[dict]:
     """Pobiera dane środowiskowe z Raspberry Pi (BME280)."""
     try:
-        response = requests.get(RPI_API_URL, timeout=5)
+        response = requests.get(RPI_API_URL, timeout=1)
         response.raise_for_status()
         data = response.json()
         return {

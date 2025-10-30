@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 class CPUInfo(BaseModel):
     brand: Optional[str] = None
@@ -26,3 +26,9 @@ class MemoryInfo(BaseModel):
     used: Optional[int] = None
     percent: Optional[float] = None
 
+class ConnectedUser(BaseModel):
+    name: str 
+    host: Optional[str] = None
+
+class UsersInfo(BaseModel):
+    connected_users: Optional[List[ConnectedUser]] = None

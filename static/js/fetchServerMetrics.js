@@ -12,6 +12,7 @@ const envHumidity = document.querySelector('.env_humidity');
 const envPressure = document.querySelector('.env_pressure');
 const hostname = document.querySelector('.hostname');
 const ip = document.querySelector('.ip')
+const users = document.querySelector('.users');
 
 const getServerMetrics = async () => {
     try {
@@ -28,6 +29,7 @@ const getServerMetrics = async () => {
 
 const bytesToGB = bytes => (bytes / (1024 ** 3)).toFixed(2);
 
+
 const updateUI = (data) => {
     cpuTemp.textContent = data?.cpu?.temp ?? '—';
     diskUsage.textContent = data?.disk?.percent ?? '—';
@@ -41,6 +43,9 @@ const updateUI = (data) => {
     envPressure.textContent = data?.env?.pressure ?? '—';
     hostname.textContent = data?.network?.hostname ?? '—';
     ip.textContent = data?.network?.ip ?? '—';
+    users.textContent = data?.users?.connected_users.map( user => {
+        return `${user.name} ${user.host}`
+    }).join(', ') || '—';
 
 }
 

@@ -1,5 +1,5 @@
 from cpuinfo import get_cpu_info as cpuinfo_get_cpu_info
-from typing import Optional
+from typing import Optional, List
 import psutil
 import logging
 import platform
@@ -108,12 +108,36 @@ def get_memory_usage() -> dict:
     except Exception as e:
         logger.warning(f"Nie udało się pobrać danych o pamięci: {e}")
         return {}
-    
 
+
+def get_connected_users() -> dict:
+    users = {"connected_users": []}
+   
+    try:
+        result = subprocess.run(["who"], capture_output=True, text=True)
+        lines = result.stdout.strip().split("\n")
+
+        for line in lines:
+            if not line.strip():
+                continue
+            parts = line.split()
+            name = parts[0]
+            host = parts[-1]
+            users["connected_users"].append({
+                "name": name,
+                "host": host
+            })
+        return users
+    except Exception as e:
+        logger.warning(f"Nie udał osię pobrać listy użytkowników: {e}")
+    return users 
+
+    
 def get_system_metrics() -> dict:
     return {
         "cpu": get_cpu_info(),
         "memory": get_memory_usage(),
         "disk": get_disk_usage(),
-        "system": get_system_info()
+        "system": get_system_info(),
+        "users": get_connected_users()
     }

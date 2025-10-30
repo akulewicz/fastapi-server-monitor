@@ -16,6 +16,7 @@ async def get_all_metrics():
         memory=system_data["memory"],
         disk=system_data["disk"],
         system=system_data["system"],
+        users=system_data["users"],
         env=rpi_data,
         network=network_data
     )
