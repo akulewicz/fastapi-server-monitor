@@ -10,6 +10,8 @@ const totalDisk = document.querySelector('.disk_total')
 const envTemp = document.querySelector('.env_temp');
 const envHumidity = document.querySelector('.env_humidity');
 const envPressure = document.querySelector('.env_pressure');
+const hostname = document.querySelector('.hostname');
+const ip = document.querySelector('.ip')
 
 const getServerMetrics = async () => {
     try {
@@ -37,6 +39,9 @@ const updateUI = (data) => {
     envTemp.textContent = data?.env?.temperature ?? '—';
     envHumidity.textContent = data?.env?.humidity ?? '—';
     envPressure.textContent = data?.env?.pressure ?? '—';
+    hostname.textContent = data?.network?.hostname ?? '—';
+    ip.textContent = data?.network?.ip ?? '—';
+
 }
 
 const refreshMetrics = async () => {
@@ -45,4 +50,4 @@ const refreshMetrics = async () => {
 };
 
 refreshMetrics();
-setInterval(refreshMetrics, 3000);
+setInterval(refreshMetrics, 5000);
