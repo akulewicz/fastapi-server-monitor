@@ -4,6 +4,7 @@ import psutil
 import logging
 import platform
 import distro
+import subprocess
 
 
 logger = logging.getLogger(__name__)
@@ -17,17 +18,16 @@ def get_cpu_temp() -> Optional[float]:
         return None
 
     coretemps = temps.get("coretemp")
-    if not coretemps:
-        return None
 
     package_temp = None
     core_values = []
 
-    for t in coretemps:
-        if "Package" in t.label:
-            package_temp = t.current
-        elif "Core" in t.label:
-            core_values.append(t.current)
+    if coretemps:
+        for t in coretemps:
+            if "Package" in t.label:
+                package_temp = t.current
+            elif "Core" in t.label:
+                core_values.append(t.current)
     
     if package_temp is not None:
         return package_temp
@@ -35,6 +35,11 @@ def get_cpu_temp() -> Optional[float]:
     if len(core_values) > 0:
         avg_cpu_temp = sum(core_values) / len(core_values)
         return avg_cpu_temp
+
+    if "raspberrypi" in platform.uname().node.lower():
+        output = subprocess.check_output(["vcgencmd", "measure_temp"]).decode()
+        return float(output.split('=')[1].split("'")[0])
+
     
     return None
 
