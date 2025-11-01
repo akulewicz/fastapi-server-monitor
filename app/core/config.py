@@ -11,7 +11,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
 
 def configure_logging():
-    logging.basicConfig(filename="app.log",
+    logging.basicConfig(filename="logs/app.log",
                     level=logging.INFO,
                     format="{asctime} [{levelname}] {name}: {message}",
                     style="{")
