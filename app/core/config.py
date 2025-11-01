@@ -1,9 +1,14 @@
-from fastapi.staticfiles import StaticFiles
+
 from fastapi.templating import Jinja2Templates
-from api import status
-from views import home
+
+from dotenv import load_dotenv
 import logging
 import os
+
+
+load_dotenv()
+
+RPI_IP = os.getenv("RPI_IP")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -19,12 +24,6 @@ def configure_logging():
     logging.getLogger("watchfiles").setLevel(logging.WARNING)
     logging.getLogger("uvicorn.error").setLevel(logging.WARNING)
     logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
-
-
-def configure_routing(app):
-    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-    app.include_router(status.router)
-    app.include_router(home.router)
 
 
 def configure_templates():

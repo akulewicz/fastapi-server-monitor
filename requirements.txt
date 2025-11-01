@@ -3,3 +3,4 @@ psutil
 distro
 py-cpuinfo
 requests
+python-dotenv

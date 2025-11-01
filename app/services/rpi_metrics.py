@@ -1,10 +1,11 @@
 from typing import Optional
+from core.config import RPI_IP
 import requests
 import logging
 
 logger = logging.getLogger(__name__)
 
-RPI_API_URL = "http://192.168.1.6:8000/env"  
+RPI_API_URL = f"http://{RPI_IP}/env"  
 
 def get_rpi_env() -> Optional[dict]:
     """Pobiera dane środowiskowe z Raspberry Pi (BME280)."""
