@@ -1,5 +1,5 @@
 
-const url = 'http://192.168.1.6:8000/api/status'
+const url = 'http://192.168.1.109:8000/api/status'
 const cpuTemp = document.querySelector('.cpu_temp');
 const diskUsage = document.querySelector('.disk_usage');
 const memoryUsage = document.querySelector('.memory_usage');

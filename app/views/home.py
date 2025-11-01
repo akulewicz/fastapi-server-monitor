@@ -1,12 +1,12 @@
 from fastapi import APIRouter
 from fastapi import Request
-from fastapi.templating import Jinja2Templates
+from core.config import configure_templates
 from fastapi.responses import HTMLResponse
 
 
 router = APIRouter()
 
-templates = Jinja2Templates(directory="templates")
+templates = configure_templates()
 
 @router.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def dashboard(request: Request):
