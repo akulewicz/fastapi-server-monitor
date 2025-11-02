@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from app.core.config import configure_logging
+from core.config import configure_logging
 from api import status
 from views import home
 from core.config import STATIC_DIR
