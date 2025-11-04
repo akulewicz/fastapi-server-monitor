@@ -70,13 +70,45 @@ Zwraca wszystkie dane systemowe i środowiskowe w formacie JSON.
 
 ```json
 {
-  "cpu": {"brand": "Intel Core i3", "bits": 64, "arch": "x86_64", "temp": 55.3},
-  "memory": {"total": 16777216, "used": 4390912, "percent": 27.7},
-  "disk": {"total": 512000000, "used": 240000000, "percent": 46.8},
-  "system": {"system": "Linux", "release": "6.1.0", "distro": "Ubuntu 22.04.3 LTS"},
-  "network": {"hostname": "my-server", "ip": "192.168.1.10"},
-  "env": {"temperature": 23.4, "humidity": 45.2, "pressure": 1013.2},
-  "users": {"connected_users": [{"name": "kula", "host": "pts/0"}]}
+  "cpu": {
+    "brand": "Cortex-A72",
+    "arch": "ARM_8",
+    "bits": 64,
+    "temp": 51.6
+  },
+  "memory": {
+    "total": 3981168640,
+    "used": 341196800,
+    "percent": 8.6
+  },
+  "disk": {
+    "total": 30810230784,
+    "used": 4626800640,
+    "free": 24889413632,
+    "percent": 15.7
+  },
+  "system": {
+    "system": "Linux",
+    "release": "6.12.47+rpt-rpi-v8",
+    "distro": "Debian GNU/Linux 13 (trixie)"
+  },
+  "users": {
+    "connected_users": [
+      {
+        "name": "user",
+        "host": "(192.168.1.109)"
+      },
+    ]
+  },
+  "env": {
+    "temperature": 22.1,
+    "humidity": 57,
+    "pressure": 1020.6
+  },
+  "network": {
+    "hostname": "raspberrypi",
+    "ip": "192.168.1.6"
+  }
 }
 
 ```
